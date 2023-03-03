@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PeopleDao">
+
+	<insert id="addPeople" parameterType="com.po.People">
+        insert into people(name,age,sex,phone,email,school,post,salary,resume,date) 
+               values (#{name},#{age},#{sex},#{phone},#{email},#{school},#{post},#{salary},#{resume},#{date})
+    </insert>
+    
+    <select id="findAllPeople"  resultType="com.po.People">
+	    select * from people
+    </select>
+    
+    <delete id="deletePeople" parameterType="Integer">
+    	delete from people where id=#{id}
+    </delete>
+    
+    <update id="updatePeople" parameterType="com.po.People">  
+        update people set  
+          
+        name=#{name},
+        age=#{age},
+        sex=#{sex},
+       phone=#{phone},
+       email=#{email},
+      school=#{school},
+        post=#{post},
+      salary=#{salary},
+      resume=#{resume},
+        date=#{date}
+    where id=#{id}  
+    </update> 
+    
+    <select id="findPeopleById" parameterType="Integer" resultType="com.po.People" >
+    select * from people where id=#{id}
+    </select>
+    
+  
+    <select id="findPeopleByName" parameterType="String" resultType="com.po.People" >
+        select * from people where 1=1
+	    <if test="name!='' and name!=null " >
+		   and name like concat('%',#{name},'%')
+		</if>
+		<if test="name==''" >
+		    1=0
+		</if>    
+    </select>
+    
+    
+    
+     <!--  <select id="findPeopleByName" parameterType="String" resultType="com.po.People" >
+    select * from people where 
+	    <if test="name!=''" >
+		   name LIKE CONCAT('%', #{name, jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="name==''" >
+		    1=0
+		</if>    
+    </select> -->
+</mapper>
